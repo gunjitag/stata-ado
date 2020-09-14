@@ -15,15 +15,16 @@ cap program drop clean_multiple
 program clean_multiple
 	syntax, var_change(str) var_corr(str)
 	
-	replace `var_change' = subinstr(`var_change', "999", "",.)
-	replace `var_change' = `var_change' + `var_corr' if !missing(`var_corr')
+	replace `var_change' = subinstr(`var_change', "999", "",.) if !missing(`var_corr')
 	replace `var_change'_999 = 0 if !missing(`var_corr')
-	
 	
 	levelsof `var_corr', l(corr_val) c
 	
 	foreach value of local corr_val {
 		cap gen `var_change'_`value' = 0
+		replace `var_change' = `var_change' + "`value'" if `var_corr' == "`value'" & `var_change'_`value' == 0
 		replace `var_change'_`value' = 1 if `var_corr' == "`value'"
 	}
+	
+	replace `var_change' = strtrim(`var_change')
 end
