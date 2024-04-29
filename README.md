@@ -10,6 +10,7 @@ The program cleans the multiple select variables through following steps:
 2. Appends the correct option to the variable value
 3. Changes indicator for whether the original option was selected for the var (eg var_999) to 0
 4. Changes indicator for the correct option to 1
+
 Note: this program only deals when there is only one option to be appended
 To append multiple options, split the answers and run program on each separately
 
